@@ -48,17 +48,19 @@ result = ""
 for i in range(inp[0] - 2):
     a = set()
     for v in res:
+        rr=[]
         if v[0] == i:
 
             if v[1] not in a:
-                result += str(v[1] + 1) + " "
+                rr.append(str(v[1] + 1)+" ")
             a.add(v[1])
         elif v[1] == i:
             if v[0] not in a:
-                result += str(v[0] + 1) + " "
+                rr.append(str(v[0] + 1)+" ")
             a.add(v[0])
+        result+="".join(rr)
 
-    result += "\n"
+    result += "0\n"
 result += str(sum([i[2] for i in res]))
 file.close()
 file = open("output.txt", "w")
