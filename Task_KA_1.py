@@ -36,7 +36,8 @@ while coo > 1:
     while True:
         v = r[link_r]
         link_r += 1
-        if not (where(g, minimum[0]) - where(g, minimum[1])):
+
+        if not (where(g, v[0]).intersection(where(g, v[1]))):
             minimum = v
             break
     res.add(minimum)
