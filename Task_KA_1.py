@@ -6,7 +6,7 @@ def where(_dict, _value):
     return r
 
 
-file = open("input.txt")
+file = open("in.txt")
 
 N = int(file.readline())
 num = 0
@@ -59,11 +59,11 @@ for i in range(inp[0] - 2):
             if v[0] not in a:
                 rr.append(str(v[0] + 1)+" ")
             a.add(v[0])
-        result+="".join(rr)
+        result+="".join(sorted(rr))
 
     result += "0\n"
 result += str(sum([i[2] for i in res]))
 file.close()
-file = open("output.txt", "w")
+file = open("out.txt", "w")
 file.write(result)
 file.close()
