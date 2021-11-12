@@ -1,9 +1,10 @@
-def where(_dict, _value):
-    r = set()
-    for i in _dict.keys():
-        if _value in _dict[i]:
-            r.add(i)
-    return r
+def where(v1, v2, ng):
+    for i in ng:
+        if v1 in i and v2 in i:
+            return False
+        if v1 in i or v2 in i:
+            return True
+    return True
 
 
 file = open("in.txt")
@@ -29,6 +30,7 @@ r = list(set(r))
 r.sort(key=lambda el: el[2])
 link_r = 0
 g = {i: {i} for i in range(len(matrix))}
+ng = [{i} for i in range(len(matrix))]
 res = set()
 coo = len(matrix)
 while coo > 1:
@@ -37,31 +39,40 @@ while coo > 1:
         v = r[link_r]
         link_r += 1
 
-        if not (where(g, v[0]).intersection(where(g, v[1]))):
+        if where(v[0], v[1], ng):
             minimum = v
             break
     res.add(minimum)
-
+    nss = set()
+    q=[]
+    for ss in ng:
+        if minimum[0] in ss or minimum[1] in ss:
+            nss=nss.union(ss)
+            q.append(ss)
+    for ee in q:
+        ng.remove(ee)
+    ng.append(nss)
     g[minimum[0]] = g[minimum[1]].union(g[minimum[0]])
     g[minimum[1]] = g[minimum[0]]
     coo -= 1
 result = ""
 for i in range(inp[0] - 2):
     a = set()
+    res1 = []
     for v in res:
-        rr=[]
+        rr = []
         if v[0] == i:
 
             if v[1] not in a:
-                rr.append(str(v[1] + 1)+" ")
+                res1.append(str(v[1] + 1))
             a.add(v[1])
         elif v[1] == i:
             if v[0] not in a:
-                rr.append(str(v[0] + 1)+" ")
+                res1.append(str(v[0] + 1))
             a.add(v[0])
-        result+="".join(sorted(rr))
+    result += " ".join(sorted(res1))
 
-    result += "0\n"
+    result += " 0\n"
 result += str(sum([i[2] for i in res]))
 file.close()
 file = open("out.txt", "w")
